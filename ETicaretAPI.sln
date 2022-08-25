@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1958B1FF-0300-4249-9617-D618BEBAA7A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretAPI.API", "Presentation\ETicaretAPI.API\ETicaretAPI.API.csproj", "{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaretAPI.Application", "Core\ETicaretAPI.Application\ETicaretAPI.Application.csproj", "{DDB19BCD-48EC-47FB-9619-548F41F8F542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretAPI.Application", "Core\ETicaretAPI.Application\ETicaretAPI.Application.csproj", "{DDB19BCD-48EC-47FB-9619-548F41F8F542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaretAPI.Domain", "Core\ETicaretAPI.Domain\ETicaretAPI.Domain.csproj", "{A4E7A2FF-AFB9-4702-BFC5-E46E4BF9461B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretAPI.Domain", "Core\ETicaretAPI.Domain\ETicaretAPI.Domain.csproj", "{A4E7A2FF-AFB9-4702-BFC5-E46E4BF9461B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaretAPI.Infrastructure", "Infrastructure\ETicaretAPI.Infrastructure\ETicaretAPI.Infrastructure.csproj", "{C0AFB8D8-79F8-4ED3-9409-1F6849339A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretAPI.Infrastructure", "Infrastructure\ETicaretAPI.Infrastructure\ETicaretAPI.Infrastructure.csproj", "{C0AFB8D8-79F8-4ED3-9409-1F6849339A9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETicaret.API.Persistence", "ETicaret.API.Persistence\ETicaret.API.Persistence.csproj", "{ACECFF44-1131-4CE6-AAED-41677264F054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaret.API.Persistence", "ETicaret.API.Persistence\ETicaret.API.Persistence.csproj", "{ACECFF44-1131-4CE6-AAED-41677264F054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETicaretAPI.API", "Presentation\ETicaretAPI.API\ETicaretAPI.API.csproj", "{A12A129F-5EDD-4337-87BA-65F9B2811069}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DDB19BCD-48EC-47FB-9619-548F41F8F542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DDB19BCD-48EC-47FB-9619-548F41F8F542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDB19BCD-48EC-47FB-9619-548F41F8F542}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,16 +41,20 @@ Global
 		{ACECFF44-1131-4CE6-AAED-41677264F054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACECFF44-1131-4CE6-AAED-41677264F054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACECFF44-1131-4CE6-AAED-41677264F054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12A129F-5EDD-4337-87BA-65F9B2811069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12A129F-5EDD-4337-87BA-65F9B2811069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12A129F-5EDD-4337-87BA-65F9B2811069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12A129F-5EDD-4337-87BA-65F9B2811069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6C7C46D5-1143-4E7F-B58D-72EAAA3C40BE} = {1958B1FF-0300-4249-9617-D618BEBAA7A3}
 		{DDB19BCD-48EC-47FB-9619-548F41F8F542} = {A764D870-1F23-4341-8BC2-6EED8E3F1EE9}
 		{A4E7A2FF-AFB9-4702-BFC5-E46E4BF9461B} = {A764D870-1F23-4341-8BC2-6EED8E3F1EE9}
 		{C0AFB8D8-79F8-4ED3-9409-1F6849339A9C} = {9E4A94E5-04CE-48D0-9C2C-95F8B60E599A}
 		{ACECFF44-1131-4CE6-AAED-41677264F054} = {9E4A94E5-04CE-48D0-9C2C-95F8B60E599A}
+		{A12A129F-5EDD-4337-87BA-65F9B2811069} = {1958B1FF-0300-4249-9617-D618BEBAA7A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5834BB04-D80C-4464-ADAD-258E81C7E339}
