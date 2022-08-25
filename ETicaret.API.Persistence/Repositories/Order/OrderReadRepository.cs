@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETicaret.API.Persistence.Repositories.Order
 {
+    //
     internal class OrderReadRepository
     {
     }
