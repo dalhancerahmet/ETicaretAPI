@@ -15,6 +15,7 @@ namespace ETicaretAPI.Application.Repositories
         Task<bool> Remove(string id);
         bool Remove(T model);
         bool RemoveRange(List<T> datas);
+        Task<int> SaveAysnc();
 
 
     }

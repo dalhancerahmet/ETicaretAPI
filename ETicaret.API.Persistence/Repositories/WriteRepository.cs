@@ -25,12 +25,11 @@ namespace ETicaret.API.Persistence.Repositories
         {
            EntityEntry<T> entityEntry= await Table.AddAsync(model);
             return entityEntry.State==EntityState.Added;
-            _context.SaveChanges();
+            
         }
         public async Task<bool> AddRangeAsync(List<T> datas)
         {
            await Table.AddRangeAsync(datas);
-            _context.SaveChanges();
             return true;
         }
         public async Task<bool> Remove(string id)
@@ -42,23 +41,24 @@ namespace ETicaret.API.Persistence.Repositories
         {
            EntityEntry<T> entityEntry=  Table.Remove(model);
            return entityEntry.State==EntityState.Deleted;
-            _context.SaveChanges();
 
         }
 
         public bool RemoveRange(List<T> datas)
         {
             Table.RemoveRange(datas);
-            _context.SaveChanges();
             return true;
         }
+
+        public async Task<int> SaveAysnc()
+        => await _context.SaveChangesAsync();
+        
 
         public bool Update(T model)
         {
             Table.Update(model);
             EntityEntry<T> entityEntry = Table.Update(model);
             return entityEntry.State == EntityState.Modified;
-             _context.SaveChanges();
 
         }
     }

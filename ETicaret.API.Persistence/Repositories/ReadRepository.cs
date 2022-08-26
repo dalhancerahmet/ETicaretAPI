@@ -25,7 +25,8 @@ namespace ETicaret.API.Persistence.Repositories
         => Table;// Direkt tablosunun kendisini döndürüyoruz.
 
         public async Task<T> GetByIdAsync(string id)
-        => await Table.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id));
+        //=> await Table.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id)); // 1.kullanım
+        => await Table.FindAsync(Guid.Parse(id));//2.yöntem(daha kullanışlı)
 
         public async Task<T> GetSingleAsync(System.Linq.Expressions.Expression<Func<T, bool>> method)
         => await Table.FirstOrDefaultAsync(method);
