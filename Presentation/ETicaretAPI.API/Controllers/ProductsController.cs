@@ -20,7 +20,7 @@ namespace ETicaretAPI.API.Controllers
         public async Task Create()
         {
             await _productWriteRepository.AddAsync(new() 
-            { CreatedDate = DateTime.UtcNow, Id=Guid.NewGuid(), Name="Elma", Price=10, Stock=1000}
+            { Name="Karpuz", Price=15, Stock=500}
             );
             await _productWriteRepository.SaveAysnc();
         }

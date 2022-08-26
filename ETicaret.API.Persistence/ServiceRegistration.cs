@@ -22,7 +22,7 @@ namespace ETicaret.API.Persistence
             (configuration.GetConnectionString("SqlServerConnectionStrings")));
 
             //AddSingleTon kullanmamamızın nedeni;
-            //Addscoped her request için  1 defalığına 1 referans oluşturup onu kullanıyor;
+            //Addscoped her request için  1 defalığına 1 referans(instance) oluşturup onu kullanıyor;
             //AddSingleTon ise tüm requestler için 1 tane oluşturup ve tüm uygulama boyunca onu kullanıyor
             //Burada sağlıklı olan AddSingleton'dır.
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
