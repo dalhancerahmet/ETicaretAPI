@@ -4,8 +4,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
 builder.Services.AddControllers();
 builder.Services.AddPersistenceServices(builder.Configuration);
+
+//bu iþlem ile client'ý belirlediðimiz adreslere eriþime açýyoruz.
+builder.Services.AddCors(options =>
+       options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,7 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+//app.UseCors ile midleware i çaðýrmamýz gerekiyor ki yukarýda yazdýðýmýz cors iþleme alýnsýn.
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
