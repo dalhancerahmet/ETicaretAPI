@@ -1,4 +1,7 @@
 using ETicaret.API.Persistence;
+using ETicaretAPI.Application.Validators.Product;
+using ETicaretAPI.Infrastructure.Filters;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+    .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>())
+    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+
 builder.Services.AddPersistenceServices(builder.Configuration);
 
 //bu iþlem ile client'ý belirlediðimiz adreslere eriþime açýyoruz.
