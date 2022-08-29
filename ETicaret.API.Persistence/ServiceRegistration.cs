@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ETicaretAPI.Application.Repositories;
 using ETicaret.API.Persistence.Repositories;
+using ETicaret.API.Persistence.Repositories.File;
 
 namespace ETicaret.API.Persistence
 {
@@ -33,6 +34,11 @@ namespace ETicaret.API.Persistence
             
             services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
             services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+
+            services.AddScoped<IFileWriteRepository, FileWriteRepository>();
+            services.AddScoped<IFileReadRepository, FileReadRepository>();
+            services.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+            services.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
         }
     }
 }

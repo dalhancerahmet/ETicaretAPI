@@ -1,4 +1,5 @@
 ﻿using ETicaretAPI.Application.Repositories;
+using ETicaretAPI.Application.Services;
 using ETicaretAPI.Application.ViewModels;
 using ETicaretAPI.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -14,12 +15,14 @@ namespace ETicaretAPI.API.Controllers
         IProductWriteRepository _productWriteRepository;
         IProductReadRepository _productReadRepository;
         IWebHostEnvironment _webHostEnvironment;
+        IFileService _fileService;
 
-        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment)
+        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment, IFileService fileService)
         {
             _productWriteRepository = productWriteRepository;
             _productReadRepository = productReadRepository;
             _webHostEnvironment = webHostEnvironment;
+            _fileService = fileService;
         }
         [HttpPost("create")] 
         public async Task<IActionResult> Create(VM_Create_Product model)
@@ -56,6 +59,9 @@ namespace ETicaretAPI.API.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> Upload()
         {
+           //await _fileService.UploadAsync("resource/product-images",Request.Form.Files);//Not: sınıf tamamlanmadığından yorum satırı haline getirildi. GençayYildiz 28.Video da anlatılan konu.
+
+           
             Random rand = new Random();//random sayılar oluşturan sınıf
             //_webHostEnvironment.WebRootPath ile wwwroot path'ine erişip altındaki resource/product-images pathine ulaşıyoruz.
             string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource/product-images");

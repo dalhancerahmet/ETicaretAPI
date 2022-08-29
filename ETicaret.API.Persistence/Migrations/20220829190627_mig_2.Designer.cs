@@ -4,6 +4,7 @@ using ETicaret.API.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETicaret.API.Persistence.Migrations
 {
     [DbContext(typeof(ETicaretAPIDbContext))]
-    partial class ETicaretAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220829190627_mig_2")]
+    partial class mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,14 +55,6 @@ namespace ETicaret.API.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -147,18 +141,12 @@ namespace ETicaret.API.Persistence.Migrations
                 {
                     b.HasBaseType("ETicaretAPI.Domain.Entities.File");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasDiscriminator().HasValue("InvoiceFile");
                 });
 
             modelBuilder.Entity("ETicaretAPI.Domain.Entities.ProductImageFile", b =>
                 {
                     b.HasBaseType("ETicaretAPI.Domain.Entities.File");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("ProductImageFile");
                 });
