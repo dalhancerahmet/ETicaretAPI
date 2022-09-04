@@ -1,4 +1,4 @@
-﻿using ETicaretAPI.Application.Services;
+﻿
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Infrastructure.Services
 {
-    public class FileService : IFileService
+    public class FileService  
     {
         IWebHostEnvironment _webHostEnvironment;
 

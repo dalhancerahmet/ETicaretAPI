@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETicaretAPI.Infrastructure
+namespace ETicaretAPI.Infrastructure.Enums
 {
-    internal class Class1
+    public enum StorageType
     {
+        Local,
+        Azure,
+        AWS
     }
 }
