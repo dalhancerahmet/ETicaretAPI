@@ -21,9 +21,11 @@ namespace ETicaret.API.Persistence.Contexts
         public DbSet<ProductImageFile> ProductImageFiles { get; set; }
         public DbSet<InvoiceFile> InvoiceFiles { get; set; }
 
-
+        //saveChangesAsync sınıfı ile midleware uyguluyoruz. Swithc case ile Ekleme mi, yoksa güncelleme işlemi mi 
+        // yapıldığını tespit edip, ilgili sınıftaki updateDate ve CreatedDate propertilerine o anki zamanı işliyoruz.
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            //changeTracker ile yapılan işlemi yakalayıp foreach ile dönüp switc case ile duruma göre ilgili propertileri eşliyoruz.
             var datas = ChangeTracker.Entries<BaseEntity>();
             foreach (var data in datas)
             {
@@ -35,6 +37,7 @@ namespace ETicaret.API.Persistence.Contexts
                     
             }
 
+            //yapılan işlemi savechanges(değişikliği kaydet) yapıyoruz.
             return base.SaveChangesAsync(cancellationToken);
         }
 

@@ -52,7 +52,7 @@ namespace ETicaretAPI.API.Controllers
                 p.Price,
                 p.Stock,
             });
-            await _productWriteRepository.SaveAysnc();
+            
             return Ok(result);
         }
 
