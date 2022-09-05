@@ -48,59 +48,57 @@ namespace ETicaretAPI.API.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result = _productReadRepository.GetAll(false).Select(p=> new
+            var result = _productReadRepository.GetAll().Select(p => new
             {
+                p.Id,
                 p.Name,
                 p.Price,
                 p.Stock,
+                
             });
-            
             return Ok(result);
         }
-
         [HttpPost("upload")]
         public async Task<IActionResult> Upload()
         {
+            //dikkat!! -- > dosya yükleme esnasında alınan hata giderilecek, veritabanına yazmıyor.
+           var datas= await _storageService.UploadAsync("resource/files",Request.Form.Files);
+            
+            await _productImageFileWriteRepository.AddRangeAsync(datas.Select(d => new ProductImageFile()
+            {
+                FileName = d.fileName,
+                Path = d.pathOrContainerName,
+                Storage = _storageService.StorageName
 
-           var datas= await _storageService.UploadAsync("resource/files", Request.Form.Files);
-           //await _productImageFileWriteRepository.AddRangeAsync(datas.Select(d => new ProductImageFile()
-           // {
-           //     FileName = d.fileName,
-           //     Path=d.pathOrContainerName,
-           //     Storage=_storageService.StorageName
-                
-           // }).ToList());
-           //await _productWriteRepository.SaveAysnc();
-            return Ok();
-        //   //await _fileService.UploadAsync("resource/product-images",Request.Form.Files);//Not: sınıf tamamlanmadığından yorum satırı haline getirildi. GençayYildiz 28.Video da anlatılan konu.
+            }).ToList());
+            await _productWriteRepository.SaveAysnc();
+            return Ok(datas);
+            //    Random rand = new Random();//random sayılar oluşturan sınıf
+            //    //_webHostEnvironment.WebRootPath ile wwwroot path'ine erişip altındaki resource/product-images pathine ulaşıyoruz.
+            //    string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource/product-images");
 
-           
-        //    Random rand = new Random();//random sayılar oluşturan sınıf
-        //    //_webHostEnvironment.WebRootPath ile wwwroot path'ine erişip altındaki resource/product-images pathine ulaşıyoruz.
-        //    string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "resource/product-images");
+            //    // yukarıdaki resource/product-images path'i var mı yok mu kontrolünü yapıyoruz.
+            //    if(!Directory.Exists(uploadPath))
+            //        //yoksa oluşturuyoruz.
+            //        Directory.CreateDirectory(uploadPath);
 
-        //    // yukarıdaki resource/product-images path'i var mı yok mu kontrolünü yapıyoruz.
-        //    if(!Directory.Exists(uploadPath))
-        //        //yoksa oluşturuyoruz.
-        //        Directory.CreateDirectory(uploadPath);
+            //    //Request.Form.Files ile clientdan gelen dosyaları geziyoruz ve her birine file takma adını veriyoruz.
+            //    foreach (var file in Request.Form.Files)
+            //    {
+            //        //path.combine ile uploadpath i ve geri kalanını tek bir dize şeklinde birleştiriyoruz.
+            //       //wwwroot/resource/product-images/randomsayi+gelendosyaninadı
+            //        string fullPath = Path.Combine(uploadPath, $"{rand.Next()},{Path.GetExtension(file.FileName)}");
 
-        //    //Request.Form.Files ile clientdan gelen dosyaları geziyoruz ve her birine file takma adını veriyoruz.
-        //    foreach (var file in Request.Form.Files)
-        //    {
-        //        //path.combine ile uploadpath i ve geri kalanını tek bir dize şeklinde birleştiriyoruz.
-        //       //wwwroot/resource/product-images/randomsayi+gelendosyaninadı
-        //        string fullPath = Path.Combine(uploadPath, $"{rand.Next()},{Path.GetExtension(file.FileName)}");
+            //        //fileStream sınıfı ile belirlenen dizeye/yola create,write yetkileri veriyoruz. eklenecek dosyanın boyutunu belirtiyoruz.
+            //        using FileStream fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
 
-        //        //fileStream sınıfı ile belirlenen dizeye/yola create,write yetkileri veriyoruz. eklenecek dosyanın boyutunu belirtiyoruz.
-        //        using FileStream fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
+            //        //gelen dosyayı(file(takma ad verdiğimiz)) fileStream ile belirtilen dizeye copyalıyoruz(CopyToAsync ile )
+            //        await file.CopyToAsync(fileStream);
 
-        //        //gelen dosyayı(file(takma ad verdiğimiz)) fileStream ile belirtilen dizeye copyalıyoruz(CopyToAsync ile )
-        //        await file.CopyToAsync(fileStream);
-
-        //        //Son olarak FileStream'i kapatıyoruz.
-        //        await fileStream.FlushAsync();
-        //    }
-        //    return Ok();
+            //        //Son olarak FileStream'i kapatıyoruz.
+            //        await fileStream.FlushAsync();
+            //    }
+            //    return Ok();
         }
     }
 

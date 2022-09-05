@@ -33,7 +33,7 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Local
 
         async Task<bool> CopyFileAsync(string path, IFormFile file)
         {
-            await using FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
+            await using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1024 * 1024, useAsync: false);
             await fileStream.CopyToAsync(fileStream);
             await fileStream.FlushAsync();
             return true;
