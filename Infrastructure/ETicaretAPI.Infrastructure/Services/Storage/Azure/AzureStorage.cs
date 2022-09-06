@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Infrastructure.Services.Storage.Azure
 {
-    public class AzureStorage : IAzureStorage
+    public class AzureStorage : Storage, IAzureStorage
     {
         readonly BlobServiceClient _blobServiceClient;//azure bağlanmamızı sağlar,
         BlobContainerClient _blobContainerClient;//bağlandığımız azure üzerindeki işlemleri yapmamızı sağlar. upload delete gibi.
@@ -46,9 +46,11 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Azure
             List<(string fileName, string pathOrContainerName)> datas = new();
             foreach (IFormFile file in files)
             {
-              BlobClient blobClient=  _blobContainerClient.GetBlobClient(file.Name);
+                string fileNewName = await FileRenameAsync(containerName, file.Name, HasFile);
+
+              BlobClient blobClient=  _blobContainerClient.GetBlobClient(fileNewName);
               await blobClient.UploadAsync(file.OpenReadStream());
-                datas.Add((file.FileName, containerName));
+                datas.Add((fileNewName, containerName));
             }
             return datas;
         }
