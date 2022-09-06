@@ -17,7 +17,7 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Azure
         BlobContainerClient _blobContainerClient;//bağlandığımız azure üzerindeki işlemleri yapmamızı sağlar. upload delete gibi.
         public AzureStorage(IConfiguration configuration)
         {
-            BlobServiceClient blobServiceClient = new(configuration["Storage:Azure"]);
+            _blobServiceClient = new(configuration["Storage:Azure"]);
         }
         public async Task DeleteAsync(string containerName, string fileName)
         {

@@ -3,6 +3,7 @@ using ETicaretAPI.Application.Abstractions.Storage;
 using ETicaretAPI.Infrastructure.Enums;
 using ETicaretAPI.Infrastructure.Services;
 using ETicaretAPI.Infrastructure.Services.Storage;
+using ETicaretAPI.Infrastructure.Services.Storage.Azure;
 using ETicaretAPI.Infrastructure.Services.Storage.Local;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,7 @@ namespace ETicaretAPI.Infrastructure
             services.AddScoped<IStorage, T>();
         }
 
+        //2. yöntem ile aşağıdaki gibi servisi enjekte ediyoruz.
         public static void AddStorage(this IServiceCollection services, StorageType storageType)
         {
             switch (storageType)
@@ -34,6 +36,7 @@ namespace ETicaretAPI.Infrastructure
                     services.AddScoped<IStorage, LocalStorage>();
                     break;
                 case StorageType.Azure:
+                    services.AddScoped<IStorage, AzureStorage>();
                     break;
                 case StorageType.AWS:
                     break;

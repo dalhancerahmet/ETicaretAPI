@@ -62,7 +62,7 @@ namespace ETicaretAPI.API.Controllers
         public async Task<IActionResult> Upload()
         {
             //dikkat!! -- > dosya yükleme esnasında alınan hata giderilecek, veritabanına yazmıyor.
-           var datas= await _storageService.UploadAsync("resource/files",Request.Form.Files);
+           var datas= await _storageService.UploadAsync("files",Request.Form.Files);
             
             await _productImageFileWriteRepository.AddRangeAsync(datas.Select(d => new ProductImageFile()
             {

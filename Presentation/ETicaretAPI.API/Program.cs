@@ -3,6 +3,7 @@ using ETicaretAPI.Application.Validators.Product;
 using ETicaretAPI.Infrastructure;
 using ETicaretAPI.Infrastructure.Enums;
 using ETicaretAPI.Infrastructure.Filters;
+using ETicaretAPI.Infrastructure.Services.Storage.Azure;
 using ETicaretAPI.Infrastructure.Services.Storage.Local;
 using FluentValidation.AspNetCore;
 
@@ -18,8 +19,8 @@ builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
-builder.Services.AddStorage<LocalStorage>();//1.kullaným
-//builder.Services.AddStorage(StorageType.Local);//2.kullaným
+builder.Services.AddStorage<AzureStorage>();//1.kullaným
+//builder.Services.AddStorage(StorageType.Azure);//2.kullaným
 
 //bu iþlem ile client'ý belirlediðimiz adreslere eriþime açýyoruz.
 builder.Services.AddCors(options =>
