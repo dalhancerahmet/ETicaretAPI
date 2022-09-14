@@ -6,6 +6,8 @@ using ETicaretAPI.Infrastructure.Filters;
 using ETicaretAPI.Infrastructure.Services.Storage.Azure;
 using ETicaretAPI.Infrastructure.Services.Storage.Local;
 using FluentValidation.AspNetCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+builder.Services.AddAuthentication("Admin")
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new()
+        {
+            ValidateAudience = true, //Hangi sitelerin belirlendiðini belirlediðimiz.
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidAudience = builder.Configuration["Token:Audience"],
+            ValidIssuer= builder.Configuration["Token:Issuer"],
+            IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
+        };
+    });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
