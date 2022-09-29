@@ -1,7 +1,9 @@
-﻿using ETicaretAPI.Application.Abstractions.Storage;
+﻿using ETicaretAPI.Application.Abstractions.Hubs;
+using ETicaretAPI.Application.Abstractions.Storage;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Application.ViewModels;
 using ETicaretAPI.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO.Pipelines;
@@ -10,6 +12,7 @@ namespace ETicaretAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(AuthenticationSchemes ="Admin")]
     public class ProductsController : ControllerBase
     {
         IProductWriteRepository _productWriteRepository;
@@ -17,16 +20,18 @@ namespace ETicaretAPI.API.Controllers
         IWebHostEnvironment _webHostEnvironment;
         IStorageService _storageService;
         IProductImageFileWriteRepository _productImageFileWriteRepository;
+        IProductHubService _productHubService;
 
-        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment, IStorageService storageService, IProductImageFileWriteRepository productImageFileWriteRepository)
+        public ProductsController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IWebHostEnvironment webHostEnvironment, IStorageService storageService, IProductImageFileWriteRepository productImageFileWriteRepository, IProductHubService productHubService)
         {
             _productWriteRepository = productWriteRepository;
             _productReadRepository = productReadRepository;
             _webHostEnvironment = webHostEnvironment;
             _storageService = storageService;
             _productImageFileWriteRepository = productImageFileWriteRepository;
+            _productHubService = productHubService;
         }
-        [HttpPost("create")] 
+        [HttpPost("create")]
         public async Task<IActionResult> Create(VM_Create_Product model)
         {
             await _productWriteRepository.AddAsync(new()
@@ -35,13 +40,14 @@ namespace ETicaretAPI.API.Controllers
                 Price = model.Price,
                 Stock = model.Stock,
             });
+            await _productHubService.ProductAddedMessageAsync($"{model.Name} isminde ürün eklenmiştir.");
             await _productWriteRepository.SaveAysnc();
             return Ok(true);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var product = await _productReadRepository.GetByIdAsync(id,false);
+            var product = await _productReadRepository.GetByIdAsync(id, false);
             return Ok(product);
         }
 
@@ -50,11 +56,10 @@ namespace ETicaretAPI.API.Controllers
         {
             var result = _productReadRepository.GetAll().Select(p => new
             {
-                p.Id,
                 p.Name,
                 p.Price,
                 p.Stock,
-                
+
             });
             return Ok(result);
         }
@@ -62,8 +67,8 @@ namespace ETicaretAPI.API.Controllers
         public async Task<IActionResult> Upload()
         {
             //dikkat!! -- > dosya yükleme esnasında alınan hata giderilecek, veritabanına yazmıyor.
-           var datas= await _storageService.UploadAsync("files",Request.Form.Files);
-            
+            var datas = await _storageService.UploadAsync("files", Request.Form.Files);
+
             await _productImageFileWriteRepository.AddRangeAsync(datas.Select(d => new ProductImageFile()
             {
                 FileName = d.fileName,
@@ -101,6 +106,7 @@ namespace ETicaretAPI.API.Controllers
             //    return Ok();
         }
     }
-
 }
+
+
 
