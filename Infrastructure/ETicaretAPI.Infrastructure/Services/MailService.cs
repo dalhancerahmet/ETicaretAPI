@@ -1,4 +1,5 @@
 ﻿using ETicaretAPI.Application.Abstractions;
+using ETicaretAPI.Application.Abstractions.Token;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace ETicaretAPI.Infrastructure.Services
         public MailService(IConfiguration configuration)
         {
             _configuration = configuration;
+            
         }
 
         public async Task SendMailAsync(string to, string subject, string body, bool isBodyHtml = true)
@@ -40,5 +42,33 @@ namespace ETicaretAPI.Infrastructure.Services
             smtp.Host = _configuration["Mail:Host"];
             await smtp.SendMailAsync(mail);
         }
+
+        public async Task SendPasswordResetMailAsync(string to, string userId, string resetToken)
+        {
+            StringBuilder mail = new();
+            mail.AppendLine("Merhaba<br/>Eğer yeni şifre talebinde bulunduysanız aşağıdaki link üzerinden işlem sağlayabilirsiniz.<br/> <strong><a target=\"_blank\"href=\"...../userId/resetToken");
+            mail.AppendLine(userId);
+            mail.AppendLine("/");
+            mail.Append(resetToken);
+            mail.AppendLine("\"> Yeni şifre talebi için tıklayınız...</a></strong>");
+
+            await SendMailAsync(to,"Mail Yenileme Talebi",mail.ToString());
+
+        }
     }
+
+    //public class AuthService
+    //{
+    //    ITokenHandler _tokenHandler;
+
+    //    public AuthService(ITokenHandler tokenHandler)
+    //    {
+    //        _tokenHandler = tokenHandler;
+    //    }
+
+    //    public Task PasswordResetAsync(string email)
+    //    {
+    //      _tokenHandler.CreateAccessToken(5);
+    //    }
+    //}
 }
