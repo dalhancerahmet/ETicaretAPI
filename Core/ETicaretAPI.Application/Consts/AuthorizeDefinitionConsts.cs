@@ -9,5 +9,6 @@ namespace ETicaretAPI.Application.Consts
     public static class AuthorizeDefinitionConsts
     {
         public const string Baskets = "Baskets";
+        public const string Products = "Products";
     }
 }

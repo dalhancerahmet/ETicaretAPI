@@ -35,7 +35,7 @@ namespace ETicaretAPI.API.Controllers
             _productHubService = productHubService;
         }
         [HttpPost("create")]
-        [AuthorizeDefinition(Menu =AuthorizeDefinitionConsts.Baskets, ActionType = ActionType.Writing,Definition ="Product Create")]
+        [AuthorizeDefinition(AuthorizeDefinitionConsts.Products,"Create Product",ActionType.Writing)]
         public async Task<IActionResult> Create(VM_Create_Product model)
         {
             await _productWriteRepository.AddAsync(new()
@@ -68,6 +68,7 @@ namespace ETicaretAPI.API.Controllers
             return Ok(result);
         }
         [HttpPost("upload")]
+        [AuthorizeDefinitionAttribute(AuthorizeDefinitionConsts.Products,"Upload İmage Product", ActionType.Writing)] //attribute'lerde sınıfın sonundaki Attribute'un yazılmasına gerek yoktur.
         public async Task<IActionResult> Upload()
         {
             //dikkat!! -- > dosya yükleme esnasında alınan hata giderilecek, veritabanına yazmıyor.

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace ETicaretAPI.Infrastructure.Services.Configuration
 
                                 Action _action = new() // Action nesnesi oluşturduk
                                 {
-                                    ActionType = Enum.GetName(typeof(ActionType),authorizeDefinitionAttribute.ActionType),
+                                    ActionType = Enum.GetName(typeof(ActionType), authorizeDefinitionAttribute.ActionType),
                                     Definition = authorizeDefinitionAttribute.Definition
                                 };
 
@@ -62,8 +63,6 @@ namespace ETicaretAPI.Infrastructure.Services.Configuration
                             }
                         }
                 }
-
-
             return menus;
         }
     }
