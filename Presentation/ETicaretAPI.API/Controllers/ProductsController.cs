@@ -1,5 +1,7 @@
 ﻿using ETicaretAPI.Application.Abstractions.Hubs;
 using ETicaretAPI.Application.Abstractions.Storage;
+using ETicaretAPI.Application.Consts;
+using ETicaretAPI.Application.CustomAttributes;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Application.ViewModels;
 using ETicaretAPI.Domain.Entities;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO.Pipelines;
+using ETicaretAPI.Application.Enums;
 
 namespace ETicaretAPI.API.Controllers
 {
@@ -32,6 +35,7 @@ namespace ETicaretAPI.API.Controllers
             _productHubService = productHubService;
         }
         [HttpPost("create")]
+        [AuthorizeDefinition(Menu =AuthorizeDefinitionConsts.Baskets, ActionType = ActionType.Writing,Definition ="Product Create")]
         public async Task<IActionResult> Create(VM_Create_Product model)
         {
             await _productWriteRepository.AddAsync(new()
